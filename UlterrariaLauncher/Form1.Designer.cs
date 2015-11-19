@@ -41,7 +41,6 @@
             this.fdb = new System.Windows.Forms.FolderBrowserDialog();
             this.achievementsPnl = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.controlPanel.SuspendLayout();
             this.achievementsPnl.SuspendLayout();
@@ -150,7 +149,6 @@
             // 
             this.achievementsPnl.AutoScroll = true;
             this.achievementsPnl.Controls.Add(this.label1);
-            this.achievementsPnl.Controls.Add(this.button1);
             this.achievementsPnl.Location = new System.Drawing.Point(315, 0);
             this.achievementsPnl.Name = "achievementsPnl";
             this.achievementsPnl.Size = new System.Drawing.Size(300, 480);
@@ -166,16 +164,6 @@
             this.label1.Size = new System.Drawing.Size(109, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Achievements";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(125, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -213,7 +201,6 @@
         private System.Windows.Forms.Button playBtn;
         private System.Windows.Forms.FlowLayoutPanel achievementsPnl;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
     }
 }
 
