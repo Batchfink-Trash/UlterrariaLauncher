@@ -20,15 +20,21 @@ namespace UlterrariaLauncher
         XmlDocument doc = new XmlDocument();
         //         number, link
         Dictionary<string, string> versions = new Dictionary<string, string>();
+        int achievementsNo;
 
         //path to terraria folder
         string path = Properties.Settings.Default.path;
+
+        //list of achievement panels
+        List<AchievementPanel> achPnls = new List<AchievementPanel>();
 
         public Form1()
         {
             InitializeComponent();
 
             firstTimeSetUp();
+
+            //                              ---Download versions.xml---
             string xml;
             //get xml from dropbox
             using (WebClient client = new WebClient())
@@ -50,6 +56,8 @@ namespace UlterrariaLauncher
             }
             //set combobox to select top version
             versionBox.SelectedIndex = 0;
+
+            addPanels();
         }
 
         //EVENT HANDLERS
@@ -199,6 +207,104 @@ namespace UlterrariaLauncher
                 progLbl.Text = "ow";
                 MessageBox.Show(ex.Message, "copy Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void addPanels()
+        {
+            //                              ---Download achievements.xml---
+            //get xml from dropbox
+            string xml;
+            XmlNodeList nl = doc.SelectNodes("versions");
+            XmlNode root = nl[0];
+            using (WebClient client = new WebClient())
+            {
+                xml = client.DownloadString("https://www.dropbox.com/s/q23km2xt7bevaus/achievements.xml?dl=1");
+            }
+
+            doc.LoadXml(xml);
+            //select nodes to get to achievements
+            nl = doc.SelectNodes("achievements");
+            root = nl[0];
+            achievementsNo = root.ChildNodes.Count;
+
+            //loop through panels and achievements
+            
+            for (int i = 0; i < root.ChildNodes.Count; i++)
+            {
+                AchievementPanel pnl = new AchievementPanel();
+                //get achievement in xml
+                XmlNode xnode = root.ChildNodes[i];
+
+                //create achievement panel and controls
+                achievementsPnl.Controls.Add(pnl);
+                
+                //loop through controls in panel
+                foreach (Control ctrl in pnl.Controls)
+                {
+                    //MessageBox.Show(ctrl.Name);
+                    //check which control it is eg. title, description, image
+                    if (ctrl is Label && ctrl.Font.Size == 11)
+                    {
+                        ctrl.Text = xnode.ChildNodes.Item(0).InnerText;
+                    }
+                    else if (ctrl is Label && ctrl.Font.Size == 8)
+                    {
+                        ctrl.Text = xnode.ChildNodes.Item(1).InnerText;
+                    }
+                    else if(ctrl is PictureBox)
+                    {
+                        if (Properties.Settings.Default.completedAchieves[i])
+                        {
+                            Bitmap img = new Bitmap(path + @"\Content\Launcher\Images\" + i + ".bmp");
+                            ctrl.BackgroundImage = img;
+                        }
+                        else if(i == 0)
+                        {
+                            Bitmap img = new Bitmap(path + @"\Content\Launcher\Images\" + i.ToString() + ".bmp");
+                            ctrl.BackgroundImage = greyscale(img);
+                        }
+                    }
+                }
+
+                //Add panel to panel list
+                achPnls.Add(pnl);
+            }
+        }
+
+        private void refreshAchieves()
+        {
+            //remove previous achievements
+            foreach (Control c in achPnls)
+            {
+                //MessageBox.Show(c.Controls[0].Text);
+                achievementsPnl.Controls.Remove(c);
+            }
+            achPnls.Clear();
+            addPanels();
+        }
+
+        private Bitmap greyscale(Bitmap img)
+        {
+            img = img.Clone(new Rectangle(0, 0, img.Width, img.Height), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap grey;
+            int x, y;
+
+            for (x = 0; x < img.Width; x++)
+             {
+                 for (y = 0; y < img.Height; y++)
+                 {
+                     Color pixelColor = img.GetPixel(x, y);
+                     Color newColor = Color.FromArgb(pixelColor.R, 0, 0);
+                     img.SetPixel(x, y, newColor); // Now greyscale
+                 }
+             }
+            grey = img;   // d is grayscale version of c  
+            return grey;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            refreshAchieves();
         }
     }
 }

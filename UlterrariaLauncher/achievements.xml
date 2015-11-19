@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<achievements>
+  <achievement complete="false" id="0">
+    <title>Wow congrats!</title>
+    <description>So good!</description>
+    <imgName>achieve1.png</imgName>
+  </achievement>
+</achievements>
