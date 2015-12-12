@@ -37,9 +37,9 @@
             // AchieveDesc
             // 
             this.AchieveDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AchieveDesc.Location = new System.Drawing.Point(110, 22);
+            this.AchieveDesc.Location = new System.Drawing.Point(65, 22);
             this.AchieveDesc.Name = "AchieveDesc";
-            this.AchieveDesc.Size = new System.Drawing.Size(155, 39);
+            this.AchieveDesc.Size = new System.Drawing.Size(202, 39);
             this.AchieveDesc.TabIndex = 5;
             this.AchieveDesc.Text = "Witty description of achievement";
             // 
@@ -47,7 +47,7 @@
             // 
             this.achieveTitle.AutoSize = true;
             this.achieveTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.achieveTitle.Location = new System.Drawing.Point(107, 0);
+            this.achieveTitle.Location = new System.Drawing.Point(62, 0);
             this.achieveTitle.Name = "achieveTitle";
             this.achieveTitle.Size = new System.Drawing.Size(35, 18);
             this.achieveTitle.TabIndex = 4;
@@ -57,7 +57,7 @@
             // 
             this.achieveImg.Location = new System.Drawing.Point(0, 0);
             this.achieveImg.Name = "achieveImg";
-            this.achieveImg.Size = new System.Drawing.Size(100, 61);
+            this.achieveImg.Size = new System.Drawing.Size(61, 61);
             this.achieveImg.TabIndex = 3;
             this.achieveImg.TabStop = false;
             // 

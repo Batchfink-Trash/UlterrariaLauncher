@@ -237,31 +237,41 @@ namespace UlterrariaLauncher
 
                 //create achievement panel and controls
                 achievementsPnl.Controls.Add(pnl);
+
+                pnl.achieved = Properties.Settings.Default.completedAchieves[i];
                 
                 //loop through controls in panel
                 foreach (Control ctrl in pnl.Controls)
                 {
                     //MessageBox.Show(ctrl.Name);
                     //check which control it is eg. title, description, image
+                    //title
                     if (ctrl is Label && ctrl.Font.Size == 11)
                     {
                         ctrl.Text = xnode.ChildNodes.Item(0).InnerText;
                     }
+                    //description
                     else if (ctrl is Label && ctrl.Font.Size == 8)
                     {
-                        ctrl.Text = xnode.ChildNodes.Item(1).InnerText;
-                    }
-                    else if(ctrl is PictureBox)
-                    {
-                        if (Properties.Settings.Default.completedAchieves[i])
+                        if (pnl.achieved) 
                         {
-                            Bitmap img = new Bitmap(path + @"\Content\Launcher\Images\" + i + ".bmp");
-                            ctrl.BackgroundImage = img;
+                            //set text
+                            ctrl.Text = xnode.ChildNodes.Item(1).InnerText; 
                         }
-                        else if(i == 0)
+                        else
                         {
-                            Bitmap img = new Bitmap(path + @"\Content\Launcher\Images\" + i.ToString() + ".bmp");
-                            ctrl.BackgroundImage = greyscale(img);
+                            ctrl.Text = "????????????????????????????";
+                        }                        
+                    }
+                    else if (ctrl is PictureBox)
+                    {
+                        if (pnl.achieved)
+                        {
+                            (ctrl as PictureBox).Load(@"http://www.batchfink.webege.com/img/" + i + ".bmp");
+                        }
+                        else
+                        {
+                            (ctrl as PictureBox).Load(@"http://www.batchfink.webege.com/img/idk.bmp");
                         }
                     }
                 }
@@ -281,25 +291,6 @@ namespace UlterrariaLauncher
             }
             achPnls.Clear();
             addPanels();
-        }
-
-        private Bitmap greyscale(Bitmap img)
-        {
-            img = img.Clone(new Rectangle(0, 0, img.Width, img.Height), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            Bitmap grey;
-            int x, y;
-
-            for (x = 0; x < img.Width; x++)
-             {
-                 for (y = 0; y < img.Height; y++)
-                 {
-                     Color pixelColor = img.GetPixel(x, y);
-                     Color newColor = Color.FromArgb(pixelColor.R, 0, 0);
-                     img.SetPixel(x, y, newColor); // Now greyscale
-                 }
-             }
-            grey = img;   // d is grayscale version of c  
-            return grey;
         }
 
         private void button1_Click(object sender, EventArgs e)

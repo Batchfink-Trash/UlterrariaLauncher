@@ -12,9 +12,12 @@ namespace UlterrariaLauncher
 {
     public partial class AchievementPanel : UserControl
     {
+        public bool achieved{ get; set;}
+
+
         public AchievementPanel()
         {
             InitializeComponent();
-        }
+        }        
     }
 }
