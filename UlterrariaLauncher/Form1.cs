@@ -58,6 +58,9 @@ namespace UlterrariaLauncher
             versionBox.SelectedIndex = 0;
 
             addPanels();
+
+            //      --Set file watcher achievey thing path
+            refreshWatcher();
         }
 
         //EVENT HANDLERS
@@ -193,6 +196,7 @@ namespace UlterrariaLauncher
             path = pathBox.Text;
             Properties.Settings.Default.path = pathBox.Text;
             Properties.Settings.Default.Save();
+            refreshWatcher();
         }
 
         private void playBtn_Click(object sender, EventArgs e)
@@ -293,9 +297,31 @@ namespace UlterrariaLauncher
             addPanels();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void refreshWatcher()
         {
-            refreshAchieves();
+            fileWatcher.Path = path + @"\Content\Launcher\Watch";
+        }
+
+        private void fileWatcher_Created(object sender, FileSystemEventArgs e)
+        {
+            try
+            {
+                int achieveCode = Convert.ToInt32(Path.GetFileNameWithoutExtension(e.FullPath));
+                if (Properties.Settings.Default.completedAchieves[achieveCode])
+                {
+                    File.Delete(e.FullPath);
+                }
+                else
+                {
+                    Properties.Settings.Default.completedAchieves[achieveCode] = true;
+                    refreshAchieves();
+                    File.Delete(e.FullPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

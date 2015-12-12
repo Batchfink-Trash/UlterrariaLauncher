@@ -42,9 +42,11 @@
             this.fdb = new System.Windows.Forms.FolderBrowserDialog();
             this.achievementsPnl = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.fileWatcher = new System.IO.FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.controlPanel.SuspendLayout();
             this.achievementsPnl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileWatcher)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -166,6 +168,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Achievements";
             // 
+            // fileWatcher
+            // 
+            this.fileWatcher.EnableRaisingEvents = true;
+            this.fileWatcher.Filter = "*.achieve*";
+            this.fileWatcher.SynchronizingObject = this;
+            this.fileWatcher.Created += new System.IO.FileSystemEventHandler(this.fileWatcher_Created);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,6 +193,7 @@
             this.controlPanel.PerformLayout();
             this.achievementsPnl.ResumeLayout(false);
             this.achievementsPnl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileWatcher)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -203,6 +213,7 @@
         private System.Windows.Forms.Button playBtn;
         private System.Windows.Forms.FlowLayoutPanel achievementsPnl;
         private System.Windows.Forms.Label label1;
+        private System.IO.FileSystemWatcher fileWatcher;
     }
 }
 
