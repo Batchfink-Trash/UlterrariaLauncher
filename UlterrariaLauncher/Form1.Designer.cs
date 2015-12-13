@@ -37,8 +37,10 @@
             this.browseBtn = new System.Windows.Forms.Button();
             this.installBtn = new System.Windows.Forms.Button();
             this.controlPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.revertBtn = new System.Windows.Forms.Button();
             this.playBtn = new System.Windows.Forms.Button();
             this.pathBox = new System.Windows.Forms.MaskedTextBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.fdb = new System.Windows.Forms.FolderBrowserDialog();
             this.achievementsPnl = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,9 +51,11 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Image = global::UlterrariaLauncher.Properties.Resources.UlterrariaIcon;
+            this.pictureBox1.Location = new System.Drawing.Point(73, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(300, 250);
+            this.pictureBox1.Size = new System.Drawing.Size(166, 228);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -105,7 +109,7 @@
             this.installBtn.Location = new System.Drawing.Point(3, 3);
             this.installBtn.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.installBtn.Name = "installBtn";
-            this.installBtn.Size = new System.Drawing.Size(145, 43);
+            this.installBtn.Size = new System.Drawing.Size(96, 43);
             this.installBtn.TabIndex = 0;
             this.installBtn.Text = "Patch version";
             this.installBtn.UseVisualStyleBackColor = true;
@@ -114,6 +118,7 @@
             // controlPanel
             // 
             this.controlPanel.Controls.Add(this.installBtn);
+            this.controlPanel.Controls.Add(this.revertBtn);
             this.controlPanel.Controls.Add(this.playBtn);
             this.controlPanel.Controls.Add(this.pathBox);
             this.controlPanel.Controls.Add(this.browseBtn);
@@ -121,17 +126,28 @@
             this.controlPanel.Controls.Add(this.progBar);
             this.controlPanel.Controls.Add(this.textBox1);
             this.controlPanel.Controls.Add(this.progLbl);
+            this.controlPanel.Controls.Add(this.flowLayoutPanel1);
             this.controlPanel.Location = new System.Drawing.Point(0, 256);
             this.controlPanel.Name = "controlPanel";
             this.controlPanel.Size = new System.Drawing.Size(300, 224);
             this.controlPanel.TabIndex = 1;
             // 
+            // revertBtn
+            // 
+            this.revertBtn.Location = new System.Drawing.Point(102, 3);
+            this.revertBtn.Name = "revertBtn";
+            this.revertBtn.Size = new System.Drawing.Size(96, 43);
+            this.revertBtn.TabIndex = 11;
+            this.revertBtn.Text = "Revert To Vanilla";
+            this.revertBtn.UseVisualStyleBackColor = true;
+            this.revertBtn.Click += new System.EventHandler(this.revertBtn_Click);
+            // 
             // playBtn
             // 
-            this.playBtn.Location = new System.Drawing.Point(148, 3);
+            this.playBtn.Location = new System.Drawing.Point(201, 3);
             this.playBtn.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.playBtn.Name = "playBtn";
-            this.playBtn.Size = new System.Drawing.Size(147, 43);
+            this.playBtn.Size = new System.Drawing.Size(96, 43);
             this.playBtn.TabIndex = 9;
             this.playBtn.Text = "Play";
             this.playBtn.UseVisualStyleBackColor = true;
@@ -145,6 +161,13 @@
             this.pathBox.TabIndex = 8;
             this.pathBox.Text = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Terraria";
             this.pathBox.TextChanged += new System.EventHandler(this.pathBox_TextChanged);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 276);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(200, 100);
+            this.flowLayoutPanel1.TabIndex = 10;
             // 
             // achievementsPnl
             // 
@@ -188,7 +211,6 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label progLbl;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ProgressBar progBar;
@@ -201,6 +223,9 @@
         private System.Windows.Forms.Button playBtn;
         private System.Windows.Forms.FlowLayoutPanel achievementsPnl;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button revertBtn;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        protected internal System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

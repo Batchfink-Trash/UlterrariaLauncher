@@ -153,6 +153,7 @@ namespace UlterrariaLauncher
             {
                 progLbl.Text = "Copying files...";
                 //copy terraria.exe
+                File.Move(path + @"\Terraria.exe", path + @"\Terraria_vanilla.exe");
                 File.Copy(path + @"\Content\Launcher\extract\Terraria.exe", path + @"\Terraria.exe", true);
 
                 //copy dlls
@@ -173,7 +174,7 @@ namespace UlterrariaLauncher
             catch (Exception ex)
             {
                 progLbl.Text = "ow";
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error1", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -364,6 +365,24 @@ namespace UlterrariaLauncher
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        //revert back to vanilla
+        private void revertBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                progLbl.Text = "Replacing Terraria.exe...";
+                //delete terraria.exe
+                File.Delete(path + @"\Terraria.exe");
+                //rename backup to Terraria.exe
+                File.Move(path + @"\Terraria_vanilla.exe", path + @"\Terraria.exe");
+                // :D
+                progLbl.Text = "Done!";
+            }
+            catch
+            {
+                MessageBox.Show("You've not installed Ulterraria yet.");
             }
         }
     }

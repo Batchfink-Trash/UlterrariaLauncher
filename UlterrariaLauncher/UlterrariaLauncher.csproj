@@ -94,6 +94,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -112,6 +113,8 @@
   <ItemGroup>
     <Content Include="achievements.xml" />
     <Content Include="favicon.ico" />
+    <None Include="Resources\Logo.jpg" />
+    <None Include="Resources\UlterrariaIcon.png" />
     <Content Include="versions.xml" />
   </ItemGroup>
   <ItemGroup>
