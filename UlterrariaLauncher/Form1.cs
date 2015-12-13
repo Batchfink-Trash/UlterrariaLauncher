@@ -28,6 +28,9 @@ namespace UlterrariaLauncher
         //list of achievement panels
         List<AchievementPanel> achPnls = new List<AchievementPanel>();
 
+        //timer for achievements.
+        private Timer timer;
+
         public Form1()
         {
             InitializeComponent();
@@ -59,8 +62,11 @@ namespace UlterrariaLauncher
 
             addPanels();
 
-            //      --Set file watcher achievey thing path
-            refreshWatcher();
+            achievementsPnl.HorizontalScroll.Enabled = false;
+            achievementsPnl.HorizontalScroll.Visible = false;
+
+            //      --start achievements timer
+            InitTimer();
         }
 
         //EVENT HANDLERS
@@ -178,6 +184,8 @@ namespace UlterrariaLauncher
             {
                 Directory.CreateDirectory(path + @"\Content\Launcher");
                 Directory.CreateDirectory(path + @"\Content\Launcher\extract");
+                Directory.CreateDirectory(path + @"\Content\Launcher\Watch");
+                Directory.CreateDirectory(path + @"\Content\Launcher\img");
             }
         }
 
@@ -196,7 +204,6 @@ namespace UlterrariaLauncher
             path = pathBox.Text;
             Properties.Settings.Default.path = pathBox.Text;
             Properties.Settings.Default.Save();
-            refreshWatcher();
         }
 
         private void playBtn_Click(object sender, EventArgs e)
@@ -264,18 +271,40 @@ namespace UlterrariaLauncher
                         }
                         else
                         {
-                            ctrl.Text = "????????????????????????????";
+                            ctrl.Text = "?";
                         }                        
                     }
                     else if (ctrl is PictureBox)
                     {
                         if (pnl.achieved)
                         {
-                            (ctrl as PictureBox).Load(@"http://www.batchfink.webege.com/img/" + i + ".bmp");
+                            try
+                            {
+                                (ctrl as PictureBox).Load(path + @"\Content\Launcher\img" + i + ".jpg");
+                            }
+                            catch (Exception)
+                            {
+                                using (WebClient client = new WebClient())
+                                {
+                                    client.DownloadFile(@"http://www.batchfink.webege.com/img/" + i + ".jpg", path + @"\Content\Launcher\img\" + i + ".jpg");
+                                }
+                                (ctrl as PictureBox).Load(path + @"\Content\Launcher\img\" + i + ".jpg");
+                            }
                         }
                         else
                         {
-                            (ctrl as PictureBox).Load(@"http://www.batchfink.webege.com/img/idk.bmp");
+                            try
+                            {
+                                (ctrl as PictureBox).Load(path + @"\Content\Launcher\img\idk.jpg");
+                            }
+                            catch (Exception)
+                            {
+                                using (WebClient client = new WebClient())
+                                {
+                                    client.DownloadFile(@"http://www.batchfink.webege.com/img/idk.jpg", path + @"\Content\Launcher\img\idk.jpg");
+                                }
+                                (ctrl as PictureBox).Load(path + @"\Content\Launcher\img\idk.jpg");
+                            }
                         }
                     }
                 }
@@ -297,25 +326,39 @@ namespace UlterrariaLauncher
             addPanels();
         }
 
-        private void refreshWatcher()
+        public void InitTimer()
         {
-            fileWatcher.Path = path + @"\Content\Launcher\Watch";
+            timer = new Timer();
+            timer.Tick += new EventHandler(timerTick);
+            timer.Interval = 5000;
+            timer.Start();
         }
 
-        private void fileWatcher_Created(object sender, FileSystemEventArgs e)
+        private void timerTick(object sender, EventArgs e)
+        {
+            checkWatch();
+        }
+
+        private void checkWatch()
         {
             try
             {
-                int achieveCode = Convert.ToInt32(Path.GetFileNameWithoutExtension(e.FullPath));
-                if (Properties.Settings.Default.completedAchieves[achieveCode])
+                if (Directory.EnumerateFileSystemEntries(path + @"\Content\Launcher\Watch").Any())
                 {
-                    File.Delete(e.FullPath);
-                }
-                else
-                {
-                    Properties.Settings.Default.completedAchieves[achieveCode] = true;
-                    refreshAchieves();
-                    File.Delete(e.FullPath);
+                    string[] files = Directory.GetFiles(path + @"\Content\Launcher\Watch");
+                    string e = files[0];
+                    int achieveCode = Convert.ToInt32(Path.GetFileNameWithoutExtension(e));
+                    if (Properties.Settings.Default.completedAchieves[achieveCode])
+                    {
+                        File.Delete(e);
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.completedAchieves[achieveCode] = true;
+                        Properties.Settings.Default.Save();
+                        refreshAchieves();
+                        File.Delete(e);
+                    }
                 }
             }
             catch (Exception ex)

@@ -39,7 +39,7 @@
             this.AchieveDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AchieveDesc.Location = new System.Drawing.Point(65, 22);
             this.AchieveDesc.Name = "AchieveDesc";
-            this.AchieveDesc.Size = new System.Drawing.Size(202, 39);
+            this.AchieveDesc.Size = new System.Drawing.Size(302, 39);
             this.AchieveDesc.TabIndex = 5;
             this.AchieveDesc.Text = "Witty description of achievement";
             // 
@@ -69,7 +69,7 @@
             this.Controls.Add(this.achieveTitle);
             this.Controls.Add(this.achieveImg);
             this.Name = "AchievementPanel";
-            this.Size = new System.Drawing.Size(270, 62);
+            this.Size = new System.Drawing.Size(370, 62);
             ((System.ComponentModel.ISupportInitialize)(this.achieveImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
