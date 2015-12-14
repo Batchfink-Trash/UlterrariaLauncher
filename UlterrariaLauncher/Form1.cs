@@ -167,9 +167,6 @@ namespace UlterrariaLauncher
                 new Microsoft.VisualBasic.Devices.Computer().FileSystem.CopyDirectory(path + @"\Content\Launcher\extract\Ulterraria", path + @"\Content\Ulterraria", Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs);
                 progLbl.Text = "Done!";
                 progBar.Value = 0;
-
-                
-                
             }
             catch (Exception ex)
             {
@@ -348,18 +345,30 @@ namespace UlterrariaLauncher
                 {
                     string[] files = Directory.GetFiles(path + @"\Content\Launcher\Watch");
                     string e = files[0];
-                    int achieveCode = Convert.ToInt32(Path.GetFileNameWithoutExtension(e));
-                    if (Properties.Settings.Default.completedAchieves[achieveCode])
+                    int result = 0;
+                    if (Int32.TryParse(Path.GetFileNameWithoutExtension(e), out result))
                     {
-                        File.Delete(e);
+                        int achieveCode = Convert.ToInt32(Path.GetFileNameWithoutExtension(e));
+                        if (Properties.Settings.Default.completedAchieves[achieveCode])
+                        {
+                            File.Delete(e);
+                        }
+                        else
+                        {
+                            Properties.Settings.Default.completedAchieves[achieveCode] = true;
+                        }
                     }
-                    else
+                    else if (Path.GetFileNameWithoutExtension(e) == "reset")
                     {
-                        Properties.Settings.Default.completedAchieves[achieveCode] = true;
-                        Properties.Settings.Default.Save();
-                        refreshAchieves();
-                        File.Delete(e);
+                        for (int i = 0; i < Properties.Settings.Default.completedAchieves.Length; i++)
+                        {
+                            Properties.Settings.Default.completedAchieves[i] = false;
+                        }
                     }
+
+                    Properties.Settings.Default.Save();
+                    refreshAchieves();
+                    File.Delete(e);
                 }
             }
             catch (Exception ex)
